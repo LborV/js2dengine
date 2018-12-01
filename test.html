@@ -1,0 +1,77 @@
+<html>
+<head>
+    <title>test</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <script src="engine.js"></script>
+    <script>
+
+        var game = new engine();
+
+        var myBox = new game.fillBox({
+            x: 10,
+            y: 50,
+            color: '#FFF',
+            width: 100,
+            height: 50
+        });
+
+        var myBox2 = new game.fillBox({
+            x: 500,
+            y: 50,
+            color: '#F0F',
+            width: 100,
+            height: 20
+        });
+
+        var myImage = new game.sprite({
+            x: 200,
+            y: 100,
+            src: 'https://mdn.mozillademos.org/files/5397/rhino.jpg',
+            width: 100,
+            height: 100
+        });
+
+        var myGif = new game.sprite({
+            x: 400,
+            y: 100,
+            src: 'https://media.giphy.com/media/l3q2yYNt8DXoyKRdm/giphy.gif'
+        });
+
+        var dir1 = 1;
+        var dir2 = 1;
+
+        game.update = function(){
+            myImage.draw();
+            myGif.draw();
+            myBox.draw();
+            myBox2.draw();
+
+            if (myBox.x > game.width) {
+                dir1 = -1;
+            } else if (myBox.x < 0) {
+                dir1 = 1;
+            }
+
+            if (myBox2.y > game.height) {
+                dir2 = -1;
+            } else if (myBox2.y < 0) {
+                dir2 = 1;
+            }
+
+            myBox.x += dir1;
+            myBox2.y += dir2;
+            
+        }
+        
+        game.start();
+
+    </script>
+</body>
+</html>
