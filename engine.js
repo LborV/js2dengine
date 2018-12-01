@@ -30,10 +30,15 @@ function engine(width = undefined, height = undefined, style = undefined) {
         console.log('Update function is not declared!');
     }
 
-    _engine.start = function(){
+    _engine.draw = function(){
         _engine.ctx.clearRect(0, 0, _engine.width, _engine.height);
         _engine.update();
-        requestAnimationFrame(_engine.start);
+        requestAnimationFrame(_engine.draw);
+    }
+
+    _engine.start = function(){
+        _engine.keyBoard();
+        _engine.draw();
     }
 
     //Rectangle
@@ -49,6 +54,28 @@ function engine(width = undefined, height = undefined, style = undefined) {
         draw: function(){
             _engine.ctx.fillStyle= this.color;
             _engine.ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+
+    _engine.strokeBox = function(params){
+        this.x = params.x;
+        this.y = params.y;
+        this.width = params.width;
+        this.height = params.height;
+        this.color = params.color;
+        this.lineWidth = params.lineWidth;
+    }
+
+    _engine.strokeBox.prototype = {
+        draw: function(){
+            if(this.lineWidth == undefined) {
+                _engine.ctx.lineWidth = 1;
+            } else {
+                _engine.ctx.lineWidth = this.lineWidth;
+            }
+            _engine.ctx.strokeStyle = this.color;
+            _engine.ctx.strokeRect(this.x, this.y, this.width, this.height);
+            _engine.ctx.stroke();
         }
     }
 
@@ -71,4 +98,28 @@ function engine(width = undefined, height = undefined, style = undefined) {
             }
         }
     }
+
+    //Keyboard
+    _engine.isKeyboardInit = false;
+    _engine.pressedKeys = {};
+    _engine.keyBoard = function(){
+        if(_engine.isKeyboardInit) {
+            return;
+        }
+        _engine.isKeyboardInit = true;
+        
+        window.addEventListener('keydown', function(event){
+            _engine.pressedKeys[event.keyCode] = true;
+        });
+
+        window.addEventListener('keyup', function(event){
+            _engine.pressedKeys[event.keyCode] = false;
+        });
+    }
+
+    //Mouse
+
+
+    //Text
+
 }

@@ -12,22 +12,24 @@
     <script src="engine.js"></script>
     <script>
 
-        var game = new engine();
+        var game = new engine(undefined, undefined, 'background: linear-gradient(#411452, #840e5f);');
 
         var myBox = new game.fillBox({
             x: 10,
             y: 50,
-            color: '#FFF',
+            color: '#0FF',
             width: 100,
             height: 50
         });
 
-        var myBox2 = new game.fillBox({
+
+        var myBox2 = new game.strokeBox({
             x: 500,
             y: 50,
-            color: '#F0F',
+            color: '#3D3D3D',
             width: 100,
-            height: 20
+            height: 20,
+            lineWidth: 10
         });
 
         var myImage = new game.sprite({
@@ -67,6 +69,14 @@
 
             myBox.x += dir1;
             myBox2.y += dir2;
+
+            if(game.pressedKeys[87]) {
+                dir1 *= 1.5;
+            }
+
+            if(game.pressedKeys[83]) {
+                dir2 *= 1.5;
+            }
             
         }
         
