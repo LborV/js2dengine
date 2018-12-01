@@ -1,4 +1,4 @@
-function engine(width = undefined, height = undefined, style = undefined) {
+function engine(style = undefined, width = undefined, height = undefined) {
     //Initialization
     let _engine = this;
     _engine.doc = document;
