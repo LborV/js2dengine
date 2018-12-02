@@ -7,6 +7,7 @@
             padding: 0;
         }
     </style>
+    <meta charset="UTF-8" />
 </head>
 <body>
     <script src="engine.js"></script>
@@ -22,6 +23,27 @@
             height: 50
         });
 
+        myBox.hover = function(){
+            this.color = '#099';
+        }
+
+        myBox.unhover = function(){
+            this.color = '#0FF';
+        }
+
+        myBox.onDown = function(){
+            this.color = '#F0F';
+        }
+        
+        game.loading = function(){
+            game.engineLogger.infoMessage('Loading...');
+            game.engineLogger.infoMessage('Console enabled');    
+        }
+
+        game.onload = function(){
+            game.engineLogger.okMessage('Page loaded and console disabled');
+            game.engineLogger.disable();
+        }
 
         var myBox2 = new game.strokeBox({
             x: 500,
@@ -40,8 +62,24 @@
             height: 100
         });
 
+        myImage.clicked = false;
+
+        myImage.onDown = function(){
+            this.width = 200;
+            this.height = 200;
+            
+            this.clicked = !this.clicked;
+        }
+
+        myImage.onUp = function(){
+            if(this.clicked) {
+                this.width = 100;
+                this.height = 100;
+            }
+        }
+
         var myGif = new game.sprite({
-            x: 400,
+            x: 200,
             y: 100,
             src: 'https://media.giphy.com/media/l3q2yYNt8DXoyKRdm/giphy.gif'
         });
@@ -50,8 +88,8 @@
         var dir2 = 1;
 
         game.update = function(){
-            myImage.draw();
             myGif.draw();
+            myImage.draw();
             myBox.draw();
             myBox2.draw();
 
@@ -79,8 +117,6 @@
             }
             
         }
-        
-        game.start();
 
     </script>
 </body>
