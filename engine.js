@@ -1,7 +1,13 @@
-function engine(style = undefined, width = undefined, height = undefined) {
+function engine(style = undefined, startAuto = undefined, width = undefined, height = undefined) {
     //Initialization
     let _engine = this;
     _engine.doc = document;
+
+    if(startAuto != undefined) {
+        _engine.startAuto = startAuto;
+    } else {
+        _engine.startAuto = true;
+    }
 
     if (width != undefined && height != undefined) {
         _engine.width = width;
@@ -126,6 +132,10 @@ function engine(style = undefined, width = undefined, height = undefined) {
 
     _engine.fillBox.prototype = {
         draw: function(){
+            if(!(this.x >= 0 && this.x + this.width <= _engine.width && this.y + this.height <= _engine.height && this.y >= 0)) {
+                return;
+            }
+
             _engine.ctx.fillStyle= this.color;
 
             if(_engine.mouseCoordinates.x >= this.x && _engine.mouseCoordinates.x <= this.x + this.width
@@ -177,6 +187,10 @@ function engine(style = undefined, width = undefined, height = undefined) {
 
     _engine.strokeBox.prototype = {
         draw: function(){
+            if(!(this.x >= 0 && this.x + this.width <= _engine.width && this.y + this.height <= _engine.height && this.y >= 0)) {
+                return;
+            }
+
             if(this.lineWidth == undefined) {
                 _engine.ctx.lineWidth = 1;
             } else {
@@ -241,6 +255,10 @@ function engine(style = undefined, width = undefined, height = undefined) {
 
     _engine.sprite.prototype = {
         draw: function(){
+            if(!(this.x >= 0 && this.x + this.width <= _engine.width && this.y + this.height <= _engine.height && this.y >= 0)) {
+                return;
+            }
+
             if(_engine.mouseCoordinates.x >= this.x && _engine.mouseCoordinates.x <= this.x + this.width
                 && _engine.mouseCoordinates.y >= this.y && _engine.mouseCoordinates.y <= this.y + this.height) {
                 this.hovered = true;
@@ -255,11 +273,8 @@ function engine(style = undefined, width = undefined, height = undefined) {
                 this.onUp();
             }
             
-            if (this.width != undefined && this.height != undefined) {
-                _engine.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-            } else {
-               _engine.ctx.drawImage(this.image, this.x, this.y);
-            }
+            _engine.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+            
         }
     }
 
@@ -310,7 +325,29 @@ function engine(style = undefined, width = undefined, height = undefined) {
     }
 
     //Text
+    _engine.fillTextLine = function(params){
+        let _fillTextLine = this;
+
+        _fillTextLine.x = params.x;
+        _fillTextLine.y = params.y;
+        _fillTextLine.font = params.font;
+        _fillTextLine.color = params.color;
+        _fillTextLine.align = params.align;
+        _fillTextLine.text = params.text;
+
+    }
+
+    _engine.fillTextLine.prototype = {
+        draw: function(){
+            _engine.ctx.font = this.font;
+            _engine.ctx.fillStyle = this.color;
+            _engine.ctx.textAlign = this.align;
+            _engine.ctx.fillText(this.text, this.x, this.y);
+        }
+    }
 
     //Start engine automatically
-    _engine.start();
+    if(_engine.startAuto) {
+        _engine.start();
+    }
 }

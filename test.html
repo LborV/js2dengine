@@ -35,9 +35,10 @@
             this.color = '#F0F';
         }
         
+        game.engineLogger.infoMessage('Console enabled');    
+
         game.loading = function(){
             game.engineLogger.infoMessage('Loading...');
-            game.engineLogger.infoMessage('Console enabled');    
         }
 
         game.onload = function(){
@@ -84,6 +85,15 @@
             src: 'https://media.giphy.com/media/l3q2yYNt8DXoyKRdm/giphy.gif'
         });
 
+        var text1 = new game.fillTextLine({
+            x: 100,
+            y: 300,
+            color: '#FFF',
+            text: 'test text',
+            font: '20px Comic Sans MS',
+            align: 'center'
+        });
+
         var dir1 = 1;
         var dir2 = 1;
 
@@ -92,6 +102,7 @@
             myImage.draw();
             myBox.draw();
             myBox2.draw();
+            text1.draw();
 
             if (myBox.x > game.width) {
                 dir1 = -1;
