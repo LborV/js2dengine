@@ -334,7 +334,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _fillTextLine.color = params.color;
         _fillTextLine.align = params.align;
         _fillTextLine.text = params.text;
-
+        _fillTextLine.baseLine = params.baseLine;
     }
 
     _engine.fillTextLine.prototype = {
@@ -342,8 +342,14 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
             _engine.ctx.font = this.font;
             _engine.ctx.fillStyle = this.color;
             _engine.ctx.textAlign = this.align;
+            _engine.ctx.textBaseline = this.baseLine;
             _engine.ctx.fillText(this.text, this.x, this.y);
         }
+    }
+
+    //Math things
+    _engine.distanceBetweenTwoPoints = function(x1, y1, x2, y2){
+        return Math.sqrt( (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
     }
 
     //Start engine automatically

@@ -91,8 +91,25 @@
             color: '#FFF',
             text: 'test text',
             font: '20px Comic Sans MS',
-            align: 'center'
+            align: 'left',
+            baseLine: 'hanging'
         });
+
+        var txtBox = new game.strokeBox({
+            x: 90,
+            y: 295,
+            color: '#0000',
+            width: 100,
+            height: 30
+        });
+
+        txtBox.hover = function(){
+            text1.color = '#999';
+        }
+
+        txtBox.unhover = function(){
+            text1.color = '#FFF';
+        }
 
         var dir1 = 1;
         var dir2 = 1;
@@ -102,7 +119,9 @@
             myImage.draw();
             myBox.draw();
             myBox2.draw();
+
             text1.draw();
+            txtBox.draw();
 
             if (myBox.x > game.width) {
                 dir1 = -1;
