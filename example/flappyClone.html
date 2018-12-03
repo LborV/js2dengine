@@ -13,25 +13,30 @@
 <body>
     <script src="engine.js"></script>
     <script>
+        //Init game object
         var game = new engine(
             'background: url("https://www.desktopbackground.org/p/2014/07/26/799251_flappy-bird-charizard-edition-on-scratch_1920x1080_h.png");' +
             'background-size: cover;'
             );
 
+        //Console logs better disable
         game.engineLogger.disable();
         
+        //Player
         var bird = new game.sprite({
             src: 'http://files.needcoolshoes.com/thumbnail/r0k/flappy-bird.png',
             x: game.width/3,
             y: game.height/2
         });
+        //Custom fields
         bird.speedV = 0;
         bird.alive = false;
         bird.score = 0;
 
+        //Pipes
         var ticks = 0;
         var pipes = [];
-        
+        //Add a new one
         function addPipe(){
             let height = Math.floor(Math.random() * game.height/2) + game.height/5;
             let pipe = new game.sprite({
@@ -45,7 +50,7 @@
             pipes.push(pipe);
         }
 
-
+        //Text which will see, when die 
         var deadScore = new game.fillTextLine({
             x: game.width/2,
             y: game.height/2 - game.width * 0.35,
@@ -54,6 +59,7 @@
             align: 'center'
         });
 
+        //Text which will see while playing
         var currentScore = new game.fillTextLine({
             x: 0,
             y: game.width * 0.05,
@@ -62,6 +68,7 @@
             align: 'left'
         });
 
+        //Restart game button
         var restart = new game.sprite({
             x: game.width/2 - game.width * 0.1,
             y: game.height/2 - game.width * 0.3,
@@ -69,8 +76,10 @@
             height: game.width * 0.2,
             src: 'https://opengameart.org/sites/default/files/1443321549047.png'
         });
+        //Custom field
         restart.clicked = false;
 
+        //Standart on click can be made like this
         restart.onDown = function(){
             if(!bird.alive && !this.clicked) {
                 bird.y = game.height/2;
@@ -82,13 +91,14 @@
                 ticks = game.width;
             }
         }
-        
         restart.onUp = function(){
             if(this.clicked) {
                 this.clicked = false;
             }
         }
 
+        //Inbisible object, player can tap everywhere
+        //Alternative: just use global global object mouseCoordinates.down
         var tap = new game.strokeBox({
             x: 0,
             y: 0,
@@ -96,23 +106,28 @@
             height: game.height,
             color: '#FFF0'
         });
+        //Custom field
         tap.clicked = false;
 
+        //Standart on click can be made like this
         tap.onDown = function(){
             if(bird.alive && !this.clicked) {
                 bird.speedV -= game.height * 0.015;
                 this.clicked = true;
             }
         }
-
         tap.onUp = function(){
             if(this.clicked) {
                 this.clicked = false;
             }
         }        
 
+        //Game logic
+        //Alternative: can make this both like a custom field in invisivle object
         var difficult = 1;
         var gameTicks = 0;
+
+        //Main game loop
         game.update = function(){
             if(bird.alive) {
                 if(bird.speedV > 0) {

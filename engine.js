@@ -722,8 +722,19 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         return Math.sqrt( (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
     }
 
+    /**
+     * @todo angles
+     * 
+     * @param object rect1 -> rectangle object
+     * @param object rect2 -> rectangle object
+     * 
+     * Both must have fields: x, y, width, height
+     * 
+     * @return bool
+     */
     _engine.intersectsTwoRectangles = function(rect1, rect2) {
-        return (rect1.x >= rect2.x && rect1.x + rect1.width <= rect2.x + rect2.width && rect1.y >= rect2.y && rect1.y + rect1.height <= rect2.y + rect2.height)
+        return (rect1.x >= rect2.x && rect1.x + rect1.width <= rect2.x + rect2.width 
+            && rect1.y >= rect2.y && rect1.y + rect1.height <= rect2.y + rect2.height)
     }
 
     //Start engine automatically
