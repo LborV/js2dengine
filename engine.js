@@ -719,6 +719,10 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      * @return distance between points
      */
     _engine.distanceBetweenTwoPoints = function(x1, y1, x2, y2){
+        if(arguments.length == 2) {
+            return Math.sqrt( (x1.x - y1.x)*(x1.x - y1.x) + (x1.y - y1.y)*(x1.y - y1.y));
+        }
+
         return Math.sqrt( (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
     }
 
