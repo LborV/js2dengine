@@ -129,9 +129,28 @@
             x: 300,
             y: 300,
             r: 40,
-            color: "#FF0",
+            color: '#FF0',
             lineWidth: 3
         });
+
+        circle.hover = function(){
+            circle.color = 'blue';
+        }
+
+        circle.onDown = function(){
+            circle2.color = '#0F0';
+            circle.color = 'grey';
+        }
+
+        circle.unhover = function(){
+            circle2.color = '#FF0';
+            circle.color = '#F0F';
+        }
+
+        circle.onUp = function(){
+            circle2.color = '#FF0';
+            circle.color = '#F0F';
+        }
 
         game.update = function(){
             myImage.angle++;

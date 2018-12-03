@@ -212,6 +212,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _fillBox.color = params.color;
 
         _fillBox.hovered = false;
+        _fillBox.pressed = false;
         /**
          * Function work when cursor on/inside rectangle line
          * Should be redefined
@@ -264,7 +265,8 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
 
             if(this.hovered && _engine.mouseCoordinates.down) {
                 this.onDown();
-            } else if(this.hovered) {
+            } else if(this.hovered && this.pressed) {
+                this.pressed = false;
                 this.onUp();
             }
 
@@ -293,6 +295,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _strokeBox.lineWidth = params.lineWidth;
 
         _strokeBox.hovered = false;
+        _strokeBox.pressed = false;
         /**
          * Function work when cursor on/inside rectangle line
          * Should be redefined
@@ -349,7 +352,8 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
                 }
             if(this.hovered && _engine.mouseCoordinates.down) {
                 this.onDown();
-            } else if(this.hovered) {
+            } else if(this.hovered && this.pressed) {
+                this.pressed = false;
                 this.onUp();
             }
 
@@ -359,7 +363,15 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
 
     //Circle
     /**
-     * 
+     * Class of stroke rectangle
+     * @param array params:
+     *  x -> center X
+     *  y -> center Y
+     *  r -> radius
+     *  color -> CSS line color
+     *  lineWidth -> line width
+     *  antiClockwise -> is antiClockwise
+     *  fill -> is fill
      */
     _engine.circle = function(params){
         _circle = this;
@@ -373,6 +385,40 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _circle.antiClockwise = params.antiClockwise;
         _circle.lineWidth = params.lineWidth;
         _circle.fill = params.fill;
+
+        _circle.hovered = false;
+        _circle.pressed = false;
+        /**
+         * Function work when cursor on/inside rectangle line
+         * Should be redefined
+         */
+        _circle.hover = function(){
+            _engine.engineLogger.errorMessage('Hover function is not declared');
+        }
+
+        /**
+         * Function work when cursor escape rectangle line
+         * Should be redefined
+         */
+        _circle.unhover = function(){
+            _engine.engineLogger.errorMessage('Unhover function is not declared');
+        }
+
+        /**
+         * Function work when cursor on/inside rectangle and mouse pressed
+         * Should be redefined
+         */
+        _circle.onDown = function(){
+            _engine.engineLogger.errorMessage('On mouse down function is not declared');
+        }
+
+        /**
+         * Function work when cursor on/inside rectangle mouse was pressed and than released
+         * Should be redefined
+         */
+        _circle.onUp = function(){
+            _engine.engineLogger.errorMessage('On mouse up function is not declared');
+        }
     }
 
     _engine.circle.prototype = {
@@ -401,6 +447,21 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
                 _engine.ctx.lineWidth = 1;
             } else {
                 _engine.ctx.lineWidth = this.lineWidth;
+            }
+
+            if(_engine.distanceBetweenTwoPoints(_engine.mouseCoordinates.x, _engine.mouseCoordinates.y, this.x, this.y) <= this.r) {
+                this.hovered = true;
+                this.hover();
+            } else if(this.hovered) {
+                this.hovered = false;
+                this.unhover();
+            }
+            if(this.hovered && _engine.mouseCoordinates.down) {
+                this.pressed = true;
+                this.onDown();
+            } else if(this.hovered && this.pressed) {
+                this.pressed = false;
+                this.onUp();
             }
 
             _engine.ctx.beginPath();
@@ -439,6 +500,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _sprite.angle = params.angle;
 
         _sprite.hovered = false;
+        _sprite.pressed = false;
         /**
          * Function work when cursor on/inside rectangle line
          * Should be redefined
@@ -499,7 +561,8 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
             }
             if(this.hovered && _engine.mouseCoordinates.down) {
                 this.onDown();
-            } else if(this.hovered) {
+            } else if(this.hovered && this.pressed) {
+                this.pressed = false;
                 this.onUp();
             }
             
