@@ -1,0 +1,173 @@
+<html>
+<head>
+    <title>FlappyClone</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <script src="engine.js"></script>
+    <script>
+        var game = new engine(
+            'background: url("https://www.desktopbackground.org/p/2014/07/26/799251_flappy-bird-charizard-edition-on-scratch_1920x1080_h.png");' +
+            'background-size: cover;'
+            );
+
+        game.engineLogger.disable();
+        
+        var bird = new game.sprite({
+            src: 'http://files.needcoolshoes.com/thumbnail/r0k/flappy-bird.png',
+            x: game.width/3,
+            y: game.height/2
+        });
+        bird.speedV = 0;
+        bird.alive = false;
+        bird.score = 0;
+
+        var ticks = 0;
+        var pipes = [];
+        
+        function addPipe(){
+            let height = Math.floor(Math.random() * game.height/2) + game.height/5;
+            let pipe = new game.sprite({
+                x: game.width + height*0.78,
+                y: game.height - height,
+                height: height,
+                width: height*0.78,
+                src: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Mario_pipe.png'
+            });
+
+            pipes.push(pipe);
+        }
+
+
+        var deadScore = new game.fillTextLine({
+            x: game.width/2,
+            y: game.height/2 - game.width * 0.35,
+            color: '#9A6',
+            font: '50px Arial',
+            align: 'center'
+        });
+
+        var currentScore = new game.fillTextLine({
+            x: 0,
+            y: game.width * 0.05,
+            color: 'white',
+            font: '30px Arial',
+            align: 'left'
+        });
+
+        var restart = new game.sprite({
+            x: game.width/2 - game.width * 0.1,
+            y: game.height/2 - game.width * 0.3,
+            width: game.width * 0.2,
+            height: game.width * 0.2,
+            src: 'https://opengameart.org/sites/default/files/1443321549047.png'
+        });
+        restart.clicked = false;
+
+        restart.onDown = function(){
+            if(!bird.alive && !this.clicked) {
+                bird.y = game.height/2;
+                bird.speedV = 0;
+                bird.score = 0;
+                bird.alive = true;
+                this.clicked = true;
+                pipes = [];
+                ticks = game.width;
+            }
+        }
+        
+        restart.onUp = function(){
+            if(this.clicked) {
+                this.clicked = false;
+            }
+        }
+
+        var tap = new game.strokeBox({
+            x: 0,
+            y: 0,
+            width: game.width,
+            height: game.height,
+            color: '#FFF0'
+        });
+        tap.clicked = false;
+
+        tap.onDown = function(){
+            if(bird.alive && !this.clicked) {
+                bird.speedV -= game.height * 0.015;
+                this.clicked = true;
+            }
+        }
+
+        tap.onUp = function(){
+            if(this.clicked) {
+                this.clicked = false;
+            }
+        }        
+
+        var difficult = 1;
+        var gameTicks = 0;
+        game.update = function(){
+            if(bird.alive) {
+                if(bird.speedV > 0) {
+                    bird.angle = 10;
+                } else {
+                    bird.angle = -10;
+                }
+
+                currentScore.text = "Score: " + bird.score;
+                currentScore.draw();
+                bird.draw();
+
+                if(gameTicks % 200 == 0) {
+                    difficult += 0.1;
+                    bird.score++;
+                }
+
+                bird.y += bird.speedV;
+                bird.speedV += game.height * 0.0006;
+            } else {
+                bird.score = 0;
+                difficult = 1;
+                ticks = 0;
+                pipes = [];
+                restart.draw();
+                gameTicks = 0;
+
+                deadScore.text = 'Score: ' + bird.score;
+                deadScore.draw();
+            }
+
+            game.engineLogger.infoMessage(pipes.length + ' ' + ticks);
+            pipes.forEach(function(element){
+                element.x -= game.width * 0.005 * difficult;
+
+                element.draw();
+
+                if(game.intersectsTwoRectangles(bird, element)) {
+                    bird.alive = false;
+                }
+            });
+
+            if(ticks*difficult >= game.width/3) {
+                addPipe();
+                ticks = 0; 
+            }
+            ticks++;
+            gameTicks++;
+
+            tap.draw();
+
+            if( (bird.y < 0 || bird.y > game.height) && bird.alive) {
+                bird.alive = false;
+            }
+        }
+    </script>
+</body>
+</html>
