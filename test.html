@@ -15,6 +15,7 @@
 
         var game = new engine('background: linear-gradient(#411452, #840e5f);');
 
+
         var myBox = new game.fillBox({
             x: 10,
             y: 50,
@@ -113,8 +114,12 @@
 
         var dir1 = 1;
         var dir2 = 1;
+        myImage.angle = 0;
 
         game.update = function(){
+            myImage.angle++;
+
+
             myGif.draw();
             myImage.draw();
             myBox.draw();

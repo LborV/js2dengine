@@ -365,6 +365,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      *  width -> rectangle width
      *  height -> rectangle height
      *  src -> source of image
+     *  angle -> angle(degree) of rotation
      */
     _engine.sprite = function(params){
         let _sprite = this;
@@ -375,6 +376,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _sprite.image.src = params.src;
         _sprite.width = params.width;
         _sprite.height = params.height;
+        _sprite.angle = params.angle;
 
         _sprite.hovered = false;
         /**
@@ -441,8 +443,22 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
                 this.onUp();
             }
             
-            _engine.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-            
+            if(this.angle != undefined) {
+                // save the unrotated context of the canvas so we can restore it later
+                _engine.ctx.save();
+                  // Move registration point to the center of the canvas
+                _engine.ctx.translate(this.x, this.y);
+                _engine.ctx.rotate(this.angle*Math.PI/180);
+
+                _engine.ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
+                
+                // Move registration point back to left top corner
+                _engine.ctx.translate(-_engine.width/2, -_engine.height/2);
+                // we’re done with the rotating so restore the unrotated context
+                _engine.ctx.restore();
+            } else {
+                _engine.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+            }
         }
     }
 
