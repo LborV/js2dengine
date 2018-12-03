@@ -20,7 +20,7 @@
             );
 
         //Console logs better disable
-        game.engineLogger.disable();
+        //game.engineLogger.disable();
         
         //Player
         var bird = new game.sprite({
@@ -71,7 +71,7 @@
         //Restart game button
         var restart = new game.sprite({
             x: game.width/2 - game.width * 0.1,
-            y: game.height/2 - game.width * 0.3,
+            y: game.height/2 - game.height * 0.3,
             width: game.width * 0.2,
             height: game.width * 0.2,
             src: 'https://opengameart.org/sites/default/files/1443321549047.png'
@@ -127,6 +127,8 @@
         var difficult = 1;
         var gameTicks = 0;
 
+        game.engineLogger.infoMessage(restart.y);
+
         //Main game loop
         game.update = function(){
             if(bird.alive) {
@@ -159,7 +161,6 @@
                 deadScore.draw();
             }
 
-            game.engineLogger.infoMessage(pipes.length + ' ' + ticks);
             pipes.forEach(function(element){
                 element.x -= game.width * 0.005 * difficult;
 
