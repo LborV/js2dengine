@@ -716,6 +716,11 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      * @param int x2 -> x coordinate of second point
      * @param int y2 -> y coordinate of second point
      * 
+     * OR
+     * 
+     * @param x1 -> object that contain x,y
+     * @param y1 -> object that contain x,y
+     * 
      * @return distance between points
      */
     _engine.distanceBetweenTwoPoints = function(x1, y1, x2, y2){
