@@ -264,6 +264,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
                 }
 
             if(this.hovered && _engine.mouseCoordinates.down) {
+                this.pressed = true;
                 this.onDown();
             } else if(this.hovered && this.pressed) {
                 this.pressed = false;
@@ -351,6 +352,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
                     this.unhover();
                 }
             if(this.hovered && _engine.mouseCoordinates.down) {
+                this.pressed = true;
                 this.onDown();
             } else if(this.hovered && this.pressed) {
                 this.pressed = false;
@@ -560,6 +562,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
                 this.unhover();
             }
             if(this.hovered && _engine.mouseCoordinates.down) {
+                this.pressed = true;
                 this.onDown();
             } else if(this.hovered && this.pressed) {
                 this.pressed = false;

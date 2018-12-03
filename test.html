@@ -64,20 +64,14 @@
             height: 100
         });
 
-        myImage.clicked = false;
-
         myImage.onDown = function(){
             this.width = 200;
             this.height = 200;
-            
-            this.clicked = !this.clicked;
         }
 
         myImage.onUp = function(){
-            if(this.clicked) {
-                this.width = 100;
-                this.height = 100;
-            }
+            this.width = 100;
+            this.height = 100;
         }
 
         var myGif = new game.sprite({
