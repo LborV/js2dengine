@@ -178,6 +178,8 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         } else {
             _engine.loading();
         }
+
+        _engine.ctx.stroke();
         requestAnimationFrame(_engine.draw);
     }
 
@@ -352,7 +354,65 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
             }
 
             _engine.ctx.strokeRect(this.x, this.y, this.width, this.height);
-            _engine.ctx.stroke();
+        }
+    }
+
+    //Circle
+    /**
+     * 
+     */
+    _engine.circle = function(params){
+        _circle = this;
+
+        _circle.x = params.x;
+        _circle.y = params.y;
+        _circle.r = params.r;
+        _circle.sAngle = params.sAngle;
+        _circle.eAngle = params.eAngle;
+        _circle.color = params.color;
+        _circle.antiClockwise = params.antiClockwise;
+        _circle.lineWidth = params.lineWidth;
+        _circle.fill = params.fill;
+    }
+
+    _engine.circle.prototype = {
+        draw: function(){
+            if((this.x + this.r <= 0 && this.x - this.r >= _engine.width && this.y + this.r >= _engine.height && this.y - this.r <= 0)) {
+                return;
+            }
+
+            if(this.sAngle == undefined) {
+                this.sAngle = 0;
+            }
+
+            if(this.eAngle == undefined) {
+                this.eAngle = 2*Math.PI;
+            }
+
+            if(this.antiClockwise == undefined) {
+                this.antiClockwise = false;
+            }
+
+            if(this.fill == undefined) {
+                this.fill = false;
+            }
+
+            if(this.lineWidth == undefined) {
+                _engine.ctx.lineWidth = 1;
+            } else {
+                _engine.ctx.lineWidth = this.lineWidth;
+            }
+
+            _engine.ctx.beginPath();
+            _engine.ctx.strokeStyle = this.color;
+            _engine.ctx.arc(this.x, this.y, this.r, this.sAngle, this.eAngle, this.antiClockwise);
+
+            if(this.fill) {
+                _engine.ctx.fillStyle = this.color;
+                _engine.ctx.fill();
+            }
+
+            _engine.ctx.closePath();
         }
     }
 

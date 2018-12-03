@@ -116,6 +116,23 @@
         var dir2 = 1;
         myImage.angle = 0;
 
+        var circle = new game.circle({
+            x: 300,
+            y: 300,
+            r: 50,
+            color: "#F0F",
+            lineWidth: 1,
+            fill: true
+        });
+
+        var circle2 = new game.circle({
+            x: 300,
+            y: 300,
+            r: 40,
+            color: "#FF0",
+            lineWidth: 3
+        });
+
         game.update = function(){
             myImage.angle++;
 
@@ -127,6 +144,10 @@
 
             text1.draw();
             txtBox.draw();
+
+            circle.draw();
+            circle2.draw();
+            
 
             if (myBox.x > game.width) {
                 dir1 = -1;
