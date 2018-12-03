@@ -1,0 +1,145 @@
+<html>
+<head>
+    <title>TEST</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <script src="../engine.js"></script>
+    <script>
+        var scene = new engine(
+            'background: url(http://static.hdw.eweb4.com/media/wallpapers_2560x1600/minimalistic/1/1/polygon-orbit-minimalistic-hd-wallpaper-2560x1600-6248.png);' +
+            'background-size: cover;'
+            );
+
+        var horizontalBox1 = new scene.strokeBox({
+            x: scene.width * 0.05,
+            y: scene.height * 0.08,
+            width: scene.width * 0.05,
+            height: scene.width * 0.05,
+            color: 'blue'
+        });
+        horizontalBox1.left = true;
+
+        var horizontalBox2 = new scene.strokeBox({
+            x: scene.width * 0.2,
+            y: scene.height * 0.05,
+            width: scene.width * 0.1,
+            height: scene.width * 0.1,
+            color: 'green'
+        });
+
+        var verticalBox1 = new scene.strokeBox({
+            x: scene.width - scene.width * 0.2,
+            y: scene.height * 0.08,
+            width: scene.width * 0.05,
+            height: scene.width * 0.05,
+            color: 'blue'
+        });
+        verticalBox1.down = true;
+
+        var verticalBox2 = new scene.strokeBox({
+            x: scene.width - scene.width * 0.22,
+            y: scene.height * 0.28,
+            width: scene.width * 0.1,
+            height: scene.width * 0.1,
+            color: 'green'
+        });
+
+        var angleBox1 = new scene.sprite({
+            x: scene.width * 0.2,
+            y: scene.height * 0.5,
+            src: 'http://icons.iconarchive.com/icons/ph03nyx/super-mario/256/Retro-Block-icon.png',
+            width: scene.width * 0.1,
+            height: scene.width * 0.1,
+            angle: 0
+        });
+        angleBox1.hover = function(){
+            this.angle++;
+        }
+
+        var angleBox2  = new scene.strokeBox({
+            x: scene.width * 0.4,
+            y: scene.height * 0.5,
+            width: scene.width * 0.05,
+            height: scene.width * 0.05,
+            color: 'blue'
+        });
+
+        var circle = new scene.circle({
+            x: scene.width * 0.6,
+            y: scene.height * 0.5,
+            r: scene.width * 0.05,
+            color: 'blue',
+            lineWidth: 3
+        });
+
+        scene.update = function(){
+            //Horizontal test
+            if(horizontalBox1.left) {
+                horizontalBox1.x++;
+            } else {
+                horizontalBox1.x--;
+            }
+            
+            if(scene.intersectsTwoRectangles(horizontalBox1, horizontalBox2)) {
+                horizontalBox1.left = !horizontalBox1.left;
+                if(horizontalBox1.left) {
+                    horizontalBox1.x = scene.width * 0.05;
+                } else {
+                    horizontalBox1.x = horizontalBox2.x + horizontalBox2.width + scene.width * 0.05;
+                }
+            }
+
+            horizontalBox1.draw();
+            horizontalBox2.draw();
+
+            //Vertical test
+            if(verticalBox1.down) {
+                verticalBox1.y++;
+            } else {
+                verticalBox1.y--;
+            }
+
+            if(scene.intersectsTwoRectangles(verticalBox1, verticalBox2)) {
+                verticalBox1.down = !verticalBox1.down;
+                if(verticalBox1.down) {
+                    verticalBox1.y = scene.height * 0.08;
+                } else {
+                    verticalBox1.y = verticalBox2.y + verticalBox2.width + scene.height * 0.08;
+                }
+            }
+
+            verticalBox1.draw();
+            verticalBox2.draw();
+
+            //Angle test
+            angleBox1.draw();
+            angleBox2.draw();
+
+            angleBox2.x--;
+
+            if(scene.intersectsTwoRectangles(angleBox2, angleBox1)) {
+                angleBox2.x = scene.width * 0.4;
+            }
+
+            //Circle
+            //Coursor will simulate some point
+            if(scene.pointInCircle(scene.mouseCoordinates, circle)) {
+                circle.color = 'black'; 
+            } else {
+                circle.color = 'blue'; 
+            }
+
+            circle.draw();
+        }
+    
+    </script>
+</body>
+</html>

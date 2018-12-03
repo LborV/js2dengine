@@ -11,7 +11,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
 </head>
 <body>
-    <script src="engine.js"></script>
+    <script src="../engine.js"></script>
     <script>
         //Init game object
         var game = new engine(
@@ -150,7 +150,6 @@
                 bird.y += bird.speedV;
                 bird.speedV += game.height * 0.0006;
             } else {
-                bird.score = 0;
                 difficult = 1;
                 ticks = 0;
                 pipes = [];

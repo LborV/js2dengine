@@ -452,7 +452,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
                 _engine.ctx.lineWidth = this.lineWidth;
             }
 
-            if(_engine.distanceBetweenTwoPoints(_engine.mouseCoordinates.x, _engine.mouseCoordinates.y, this.x, this.y) <= this.r) {
+            if(_engine.pointInCircle(_engine.mouseCoordinates, this)) {
                 this.hovered = true;
                 this.hover();
             } else if(this.hovered) {
@@ -574,7 +574,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
                 // save the unrotated context of the canvas so we can restore it later
                 _engine.ctx.save();
                   // Move registration point to the center of the canvas
-                _engine.ctx.translate(this.x, this.y);
+                _engine.ctx.translate(this.x + this.width/2, this.y + this.height/2);
                 _engine.ctx.rotate(this.angle*Math.PI/180);
 
                 _engine.ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
@@ -723,18 +723,45 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
     }
 
     /**
-     * @todo angles
-     * 
      * @param object rect1 -> rectangle object
      * @param object rect2 -> rectangle object
      * 
-     * Both must have fields: x, y, width, height
+     * Both must have fields: x, y
      * 
      * @return bool
      */
     _engine.intersectsTwoRectangles = function(rect1, rect2) {
-        return (rect1.x >= rect2.x && rect1.x + rect1.width <= rect2.x + rect2.width 
-            && rect1.y >= rect2.y && rect1.y + rect1.height <= rect2.y + rect2.height)
+        //Left top corner
+        if(rect1.x >= rect2.x && rect1.x <= rect2.x + rect2.width && rect1.y >= rect2.y && rect1.y <= rect2.y + rect2.height) {
+            return true;
+        }
+
+        //Right top corner
+        if(rect1.x + rect1.width >= rect2.x && rect1.x + rect1.width <= rect2.x + rect2.width && rect1.y >= rect2.y && rect1.y <= rect2.y + rect2.height) {
+            return true;
+        }
+
+        //Left bottom corner
+        if(rect1.x >= rect2.x && rect1.x <= rect2.x + rect2.width && rect1.y + rect1.height >= rect2.y && rect1.y + rect1.height<= rect2.y + rect2.height) {
+            return true;
+        }
+
+        //Right bottom corner
+        if(rect1.x + rect1.width >= rect2.x && rect1.x + rect1.width <= rect2.x + rect2.width && rect1.y + rect1.height >= rect2.y && rect1.y + rect1.height <= rect2.y + rect2.height) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param point -> object that contain x, y coordinates
+     * @param circle -> object that contain center(x,y) and radius(r)
+     * 
+     * @return bool
+     */
+    _engine.pointInCircle = function(point, circle){
+        return (_engine.distanceBetweenTwoPoints(point.x, point.y, circle.x, circle.y) <= circle.r)
     }
 
     //Start engine automatically
