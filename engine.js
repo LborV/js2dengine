@@ -202,6 +202,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      *  width -> rectangle width
      *  height -> rectangle height
      *  color -> CSS fill color
+     *  button -> onDown will work as onClick
      */
     _engine.fillBox = function(params){
         let _fillBox = this;
@@ -211,9 +212,11 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _fillBox.width = params.width;
         _fillBox.height = params.height;
         _fillBox.color = params.color;
+        _fillBox.button = params.button;
 
         _fillBox.hovered = false;
         _fillBox.pressed = false;
+        _fillBox.clicked = false;
         /**
          * Function work when cursor on/inside rectangle line
          * Should be redefined
@@ -266,10 +269,24 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
 
             if(this.hovered && _engine.mouseCoordinates.down) {
                 this.pressed = true;
-                this.onDown();
+                if(this.button) {
+                    if(!this.clicked) {
+                        this.onDown();
+                        this.clicked = true;
+                    }
+                } else {
+                    this.onDown();
+                }
             } else if(this.hovered && this.pressed) {
                 this.pressed = false;
-                this.onUp();
+                if(this.button) {
+                    if(this.clicked) {
+                        this.onUp();
+                        this.clicked = false;
+                    }
+                } else {
+                    this.onUp();
+                }
             }
 
             _engine.ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -285,6 +302,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      *  height -> rectangle height
      *  color -> CSS line color
      *  lineWidth -> line width
+     *  button -> onDown will work as onClick
      */
     _engine.strokeBox = function(params){
         let _strokeBox = this;
@@ -295,9 +313,11 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _strokeBox.height = params.height;
         _strokeBox.color = params.color;
         _strokeBox.lineWidth = params.lineWidth;
+        _strokeBox.button = params.button;
 
         _strokeBox.hovered = false;
         _strokeBox.pressed = false;
+        _strokeBox.clicked = false;
         /**
          * Function work when cursor on/inside rectangle line
          * Should be redefined
@@ -354,10 +374,24 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
                 }
             if(this.hovered && _engine.mouseCoordinates.down) {
                 this.pressed = true;
-                this.onDown();
+                if(this.button) {
+                    if(!this.clicked) {
+                        this.onDown();
+                        this.clicked = true;
+                    }
+                } else {
+                    this.onDown();
+                }
             } else if(this.hovered && this.pressed) {
                 this.pressed = false;
-                this.onUp();
+                if(this.button) {
+                    if(this.clicked) {
+                        this.onUp();
+                        this.clicked = false;
+                    }
+                } else {
+                    this.onUp();
+                }
             }
 
             _engine.ctx.strokeRect(this.x, this.y, this.width, this.height);

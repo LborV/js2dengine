@@ -1,0 +1,60 @@
+<html>
+<head>
+    <title>TEST</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <script src="../engine.js"></script>
+    <script>
+        var scene = new engine();
+        scene.engineLogger.disable();
+
+        var fillButton = new scene.fillBox({
+            x: scene.width/2 - scene.width * 0.04,
+            y: scene.height/2 - scene.width * 0.02,
+            width: scene.width * 0.08,
+            height: scene.width * 0.04,
+            color: 'blue',
+            button: true
+        });
+
+        fillButton.onDown = function(){
+            if(this.color == 'blue') {
+                this.color = 'white';
+            } else {
+                this.color = 'blue';
+            }
+        }
+
+        var strokeButton = new scene.strokeBox({
+            x: scene.width/2 - scene.width * 0.04 + scene.width * 0.09,
+            y: scene.height/2 - scene.width * 0.02,
+            width: scene.width * 0.08,
+            height: scene.width * 0.04,
+            color: 'blue',
+            button: true
+        });
+
+        strokeButton.onDown = function(){
+            if(this.color == 'blue') {
+                this.color = 'white';
+            } else {
+                this.color = 'blue';
+            }
+        }
+
+        scene.update = function(){
+            fillButton.draw();
+            strokeButton.draw();
+        }
+
+    </script>
+</body>
+</html>
