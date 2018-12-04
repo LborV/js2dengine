@@ -656,6 +656,9 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
     }
 
     //#Keyboard
+    /**
+     * @todo phone keyboard ???
+     */
     _engine.isKeyboardInit = false;
     /**
      * Global array that contain pressed keys codes
