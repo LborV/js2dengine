@@ -629,7 +629,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      * Global array that contain pressed keys codes
     */
     _engine.pressedKeys = {};
-
+    _engine.pressedKeysLetter = {};
     /**
      * Class that add event listeners for keyboard
      */
@@ -641,10 +641,14 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         
         window.addEventListener('keydown', function(event){
             _engine.pressedKeys[event.keyCode] = true;
+            if(!event.repeat) {
+                _engine.pressedKeysLetter[event.key] = true;
+            }
         });
 
         window.addEventListener('keyup', function(event){
             _engine.pressedKeys[event.keyCode] = false;
+            _engine.pressedKeysLetter[event.key] = false;
         });
     }
 

@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>TEST</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <script src="../engine.js"></script>
+    <script>
+        var test = new engine();
+
+        var text = new test.fillTextLine({
+            x: test.width/2,
+            y: test.height/2,
+            align: 'center',
+            color: 'white'
+        });
+
+        let str = '';
+        test.update = function(){
+            //Normal text input can be like this
+            for(var a in test.pressedKeysLetter){
+                if(test.pressedKeysLetter[a]) {
+                    str += a;
+                    //Listen once
+                    test.pressedKeysLetter[a] = false;
+                }
+            }
+
+            //For game control better use this. There can be holded key
+            /*for(var a in test.pressedKeys){
+                if(test.pressedKeys[a]) {
+                    str += a;
+                    //Listen once
+                    test.pressedKeys[a] = false;
+                }
+            }*/
+
+            text.text = str;
+
+            text.draw();
+
+        }
+    </script>
+</body>
+</html>
