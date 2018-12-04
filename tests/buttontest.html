@@ -42,6 +42,24 @@
             button: true
         });
 
+        var spriteButton =  new scene.sprite({
+            x: scene.width * 0.2,
+            y: scene.height * 0.5,
+            src: 'http://icons.iconarchive.com/icons/ph03nyx/super-mario/256/Retro-Block-icon.png',
+            width: scene.width * 0.1,
+            height: scene.width * 0.1,
+            angle: 0,
+            button: true
+        });
+
+        spriteButton.onDown = function(){
+            this.angle = 0;
+        }
+
+        spriteButton.hover = function(){
+            this.angle++;
+        }
+
         strokeButton.onDown = function(){
             if(this.color == 'blue') {
                 this.color = 'white';
@@ -53,6 +71,7 @@
         scene.update = function(){
             fillButton.draw();
             strokeButton.draw();
+            spriteButton.draw();
         }
 
     </script>

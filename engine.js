@@ -535,9 +535,11 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _sprite.width = params.width;
         _sprite.height = params.height;
         _sprite.angle = params.angle;
+        _sprite.button = params.button;
 
         _sprite.hovered = false;
         _sprite.pressed = false;
+        _sprite.clicked = false;
         /**
          * Function work when cursor on/inside rectangle line
          * Should be redefined
@@ -598,10 +600,24 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
             }
             if(this.hovered && _engine.mouseCoordinates.down) {
                 this.pressed = true;
-                this.onDown();
+                if(this.button) {
+                    if(!this.clicked) {
+                        this.onDown();
+                        this.clicked = true;
+                    }
+                } else {
+                    this.onDown();
+                }
             } else if(this.hovered && this.pressed) {
                 this.pressed = false;
-                this.onUp();
+                if(this.button) {
+                    if(this.clicked) {
+                        this.onUp();
+                        this.clicked = false;
+                    }
+                } else {
+                    this.onUp();
+                }
             }
             
             if(this.angle != undefined) {
