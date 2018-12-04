@@ -6,7 +6,7 @@
  * @param int height -> canvas height
  */
 function engine(style = undefined, startAuto = undefined, width = undefined, height = undefined) {
-    //Initialization
+    //#Initialization
     
     /**
      * link to the engine object
@@ -56,7 +56,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      */
     _engine.ctx = _engine.canv.getContext('2d');
 
-    //Logger
+    //#Logger
     /**
      * Class to help output in console styled messages
      * and enable/disable console logs
@@ -128,7 +128,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
     _engine.engineLogger = new _engine.logger();
     _engine.engineLogger.enable();
 
-    //Loading
+    //#Loading
     _engine.isLoaded = false;
     
     /**
@@ -155,7 +155,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _engine.onload();
     }
 
-    //Drawing
+    //#Drawing
     /**
      * Game loop
      * Should be redefined
@@ -193,7 +193,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _engine.draw();
     }
 
-    //Rectangle
+    //#Rectangle
     /**
      * Class of filled rectangle
      * @param array params:
@@ -364,7 +364,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         }
     }
 
-    //Circle
+    //#Circle
     /**
      * Class of stroke rectangle
      * @param array params:
@@ -480,7 +480,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         }
     }
 
-    //Sprite
+    //#Sprite
     /**
      * Class of sprite
      * @param array params:
@@ -589,7 +589,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         }
     }
 
-    //Keyboard
+    //#Keyboard
     _engine.isKeyboardInit = false;
     /**
      * Global array that contain pressed keys codes
@@ -614,7 +614,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         });
     }
 
-    //Mouse
+    //#Mouse
     _engine.isMouseInit
     /**
      * Global array that contain:
@@ -652,7 +652,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         });
     }
 
-    //Touch
+    //#Touch
     /**
      * Class that add event listeners for touch
      */
@@ -677,7 +677,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         });
     }
 
-    //Text
+    //#Text
     /**
      * @param array params:
      *  x -> X position
@@ -709,7 +709,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         }
     }
 
-    //Math things
+    //#Math things
     /**
      * @param int x1 -> x coordinate of first point
      * @param int y1 -> y coordinate of first point
@@ -773,7 +773,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         return (_engine.distanceBetweenTwoPoints(point.x, point.y, circle.x, circle.y) <= circle.r)
     }
 
-    //Cookie
+    //#Cookie
     /**
      * Class that work with cookies
      */
@@ -811,7 +811,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
 
     _engine.engineCookie = new _engine.cookie();
 
-    //Start engine automatically
+    //#Start engine automatically
     if(_engine.startAuto) {
         _engine.start();
     }
