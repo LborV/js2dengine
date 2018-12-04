@@ -68,10 +68,28 @@
             }
         }
 
+        var circleButton = new scene.circle({
+            x: scene.width * 0.6,
+            y: scene.height * 0.1,
+            r: scene.width * 0.05,
+            color: 'blue',
+            lineWidth: 3,
+            button: true
+        });
+
+        circleButton.onDown = function(){
+            if(this.color == 'blue') {
+                this.color = 'yellow';
+            } else {
+                this.color = 'blue';
+            }
+        }
+
         scene.update = function(){
             fillButton.draw();
             strokeButton.draw();
             spriteButton.draw();
+            circleButton.draw();
         }
 
     </script>
