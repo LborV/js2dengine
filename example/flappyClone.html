@@ -74,14 +74,13 @@
             y: game.height/2 - game.height/2 * 0.3,
             width: game.width * 0.2,
             height: game.width * 0.2,
-            src: 'https://opengameart.org/sites/default/files/1443321549047.png'
+            src: 'https://opengameart.org/sites/default/files/1443321549047.png',
+            button: true
         });
-        //Custom field
-        restart.clicked = false;
 
         //Standart on click can be made like this
         restart.onDown = function(){
-            if(!bird.alive && !this.clicked) {
+            if(!bird.alive) {
                 bird.y = game.height/2;
                 bird.speedV = 0;
                 bird.score = 0;
@@ -89,11 +88,6 @@
                 this.clicked = true;
                 pipes = [];
                 ticks = game.width;
-            }
-        }
-        restart.onUp = function(){
-            if(this.clicked) {
-                this.clicked = false;
             }
         }
 
@@ -104,23 +98,17 @@
             y: 0,
             width: game.width,
             height: game.height,
-            color: '#FFF0'
+            color: '#FFF0',
+            button: true
         });
-        //Custom field
-        tap.clicked = false;
 
         //Standart on click can be made like this
         tap.onDown = function(){
-            if(bird.alive && !this.clicked) {
+            if(bird.alive) {
                 bird.speedV -= game.height * 0.015;
                 this.clicked = true;
             }
-        }
-        tap.onUp = function(){
-            if(this.clicked) {
-                this.clicked = false;
-            }
-        }        
+        }    
 
         //Game logic
         //Alternative: can make this both like a custom field in invisivle object
@@ -138,6 +126,9 @@
                     bird.angle = -10;
                 }
 
+                bird.y += bird.speedV;
+                bird.speedV += game.height * 0.0006;
+
                 currentScore.text = "Score: " + bird.score;
                 currentScore.draw();
                 bird.draw();
@@ -146,9 +137,6 @@
                     difficult += 0.1;
                     bird.score++;
                 }
-
-                bird.y += bird.speedV;
-                bird.speedV += game.height * 0.0006;
             } else {
                 difficult = 1;
                 ticks = 0;
