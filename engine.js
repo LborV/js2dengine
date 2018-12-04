@@ -727,6 +727,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      * Class that add event listeners for touch
      * 
      * @todo multitouch
+     * @todo bad working clicks
      */
     _engine.touch = function(){
         if(_engine.isTouchInit) {
