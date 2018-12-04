@@ -655,6 +655,8 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
     //#Touch
     /**
      * Class that add event listeners for touch
+     * 
+     * @todo multitouch
      */
     _engine.touch = function(){
         if(_engine.isTouchInit) {
@@ -674,6 +676,10 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         window.addEventListener('touchmove', function(event){
             _engine.mouseCoordinates.x = event.clientX - _engine,rect.left;
             _engine.mouseCoordinates.y = event.clientY - engine.rect.top;
+        });
+
+        window.addEventListener('touchcancel', function(event){
+            _engine.mouseCoordinates.down = false;
         });
     }
 
