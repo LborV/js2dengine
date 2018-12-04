@@ -773,6 +773,44 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         return (_engine.distanceBetweenTwoPoints(point.x, point.y, circle.x, circle.y) <= circle.r)
     }
 
+    //Cookie
+    /**
+     * Class that work with cookies
+     */
+    _engine.cookie = function(){
+        let _cookie = this;
+
+        _cookie.save = function(name, value, expires = undefined){
+            let date = new Date();
+            if(expires == undefined) {
+                date.setTime(date.getTime() + (365*24*60*60*1000));
+                expires = date.toGMTString();
+            } else {
+                date.setTime(date.getTime() + (expires));
+                expires = date.toGMTString();
+            }
+
+            _engine.doc.cookie = name + '=' + value + '; expires=' + expires + '; path=/';
+        }
+
+        _cookie.get = function(name){
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+
+        _cookie.delete = function(name) {
+            let date = new Date();
+            
+            date.setTime(date.getTime() + (-1));
+            expires = date.toGMTString();
+
+            _engine.doc.cookie = name + '=' + 'value' + '; expires=' + expires + '; path=/';
+        }
+    }
+
+    _engine.engineCookie = new _engine.cookie();
+
     //Start engine automatically
     if(_engine.startAuto) {
         _engine.start();

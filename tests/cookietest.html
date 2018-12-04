@@ -1,0 +1,86 @@
+<html>
+<head>
+    <title>TEST</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <script src="../engine.js"></script>
+    <script>
+        var scene = new engine();
+        scene.engineLogger.disable();
+
+        var button = new scene.strokeBox({
+            x: scene.width/2 - scene.width * 0.04,
+            y: scene.height/2 - scene.width * 0.02,
+            width: scene.width * 0.08,
+            height: scene.width * 0.04,
+            color: 'blue'
+        });
+
+        var buttonBack = new scene.fillBox({
+            x: scene.width/2 - scene.width * 0.04,
+            y: scene.height/2 - scene.width * 0.02,
+            width: scene.width * 0.08,
+            height: scene.width * 0.04,
+            color: '#FFF0'
+        });
+
+        var buttonText = new scene.fillTextLine({
+            x: scene.width/2,
+            y: scene.height/2,
+            color: 'black',
+            align: 'center',
+            text: '+1'
+        });
+
+        var cookieResult = new scene.fillTextLine({
+            x: scene.width/2,
+            y: scene.height/2 - scene.width * 0.05,
+            color: 'white',
+            align: 'center',
+            text: ''
+        }); 
+
+        button.hover = function(){
+            buttonBack.color = '#AAAF'; 
+        }
+
+        button.unhover = function(){
+            buttonBack.color = '#FFF0'; 
+        }
+
+        //By default cookie live 365 days
+        scene.engineCookie.save('myCookie', 0);
+        button.onDown = function(){
+            let i = scene.engineCookie.get('myCookie');
+            if(i == undefined || i == NaN) {
+                i = 0;
+            }
+            i++;
+            //cookie will live 5 seconds
+            scene.engineCookie.save('myCookie', i, 5*1000);
+        }
+
+        scene.update = function(){
+            //Deleting cookie
+            //scene.engineCookie.delete('myCookie');
+
+            cookieResult.text = scene.engineCookie.get('myCookie');
+            cookieResult.draw();
+
+            buttonBack.draw();
+            button.draw();
+            buttonText.draw();
+        }
+    
+    
+    </script>
+</body>
+</html>
