@@ -540,6 +540,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      *  height -> rectangle height
      *  src -> source of image
      *  angle -> angle(degree) of rotation
+     *  Image -> image object from DOM or anywhere else
      */
     _engine.sprite = function(params){
         let _sprite = this;
@@ -547,7 +548,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _sprite.image = new Image();
         _sprite.x = params.x;
         _sprite.y = params.y;
-        _sprite.image.src = params.src;
+        _sprite.src = params.src;
         _sprite.width = params.width;
         _sprite.height = params.height;
         _sprite.angle = params.angle;
@@ -556,6 +557,13 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _sprite.hovered = false;
         _sprite.pressed = false;
         _sprite.clicked = false;
+
+        if(_sprite.src != undefined) {
+            _sprite.image.src = params.src;
+        } else {
+            _sprite.image = params.image;
+        }
+
         /**
          * Function work when cursor on/inside rectangle line
          * Should be redefined
@@ -815,7 +823,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      * @param object rect1 -> rectangle object
      * @param object rect2 -> rectangle object
      * 
-     * Both must have fields: x, y
+     * Both must have fields: x, y, width, height
      * 
      * @return bool
      */
