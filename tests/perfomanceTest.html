@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>TEST</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <img src="../tests/media.png" id="tex" style="display: none;">
+    <script src="../engine.js"></script>
+    <script>
+        var texture;
+        var objects = [];
+
+        var scene = new engine('background: #3d3d3d;');
+        const vw = scene.width/100;
+        const vh = scene.height/100;
+
+        scene.onload = function(){
+            texture = document.getElementById('tex');
+            objects.push(new scene.sprite({
+                x: 0,
+                y: 0,
+                width: 0.5*vw,
+                height: 0.5*vh,
+                image: texture
+            }));
+        }
+
+        var text = new scene.fillTextBox({
+            x: 50*vw,
+            y: 10*vh,
+            align: 'center',
+            color: 'red',
+            font: 3*vw + 'px Arial'
+        });
+
+        scene.update = function(){
+            var d = new Date();
+            var startTime = d.getMilliseconds();
+
+            objects.push(new scene.sprite({
+                x: Math.random() * scene.width,
+                y: Math.random() * scene.height,
+                width: 0.5*vw,
+                height: 0.5*vh,
+                image: texture
+            }));
+
+            for(let i = 0; i < objects.length; i++){
+                objects[i].draw();
+            }
+
+            d = new Date();
+            var endTime = d.getMilliseconds();
+            text.text = 'Object: ' + objects.length + '; Seconds on frame: ' + (endTime - startTime);
+            text.draw();
+        }
+
+    </script>
+</body>
+</html>
