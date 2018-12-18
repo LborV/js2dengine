@@ -600,10 +600,12 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * If width and height not defined -> getting image sizes
          * Without width and height didnt work hover unhover onDown onUp functions
          */
-        _sprite.image.onload = function(){
-            if(_sprite.width == undefined || _sprite.height == undefined) {
-                _sprite.width = this.width;
-                _sprite.height = this.height;
+        if(_sprite.image != undefined) {
+            _sprite.image.onload = function(){
+                if(_sprite.width == undefined || _sprite.height == undefined) {
+                    _sprite.width = this.width;
+                    _sprite.height = this.height;
+                }
             }
         }
     }
@@ -785,6 +787,10 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _fillTextLine.align = params.align;
         _fillTextLine.text = params.text;
         _fillTextLine.baseLine = params.baseLine;
+
+        if(_fillTextLine.text == undefined) {
+            _fillTextLine.text = '';
+        }
     }
 
     _engine.fillTextLine.prototype = {
@@ -820,6 +826,10 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _fillTextBox.baseLine = params.baseLine;
         _fillTextBox.maxWidth = params.maxWidth;
         _fillTextBox.lineHeight = undefined;
+
+        if(_fillTextBox.text == undefined) {
+            _fillTextBox.text = ' ';
+        }
 
         _fillTextBox.getLineHeight = function(){
             let parent = document.createElement("span");
