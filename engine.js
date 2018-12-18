@@ -797,6 +797,70 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         }
     }
 
+    /**
+     * Text wrapper
+     *  @param array params:
+     *  x -> X position
+     *  y -> Y position
+     *  font -> CSS font
+     *  color -> CSS color
+     *  align -> CSS align
+     *  baseLine -> CSS text baseline
+     *  maxWidth -> maximum width of line
+     */
+    _engine.fillTextBox = function(params){
+        let _fillTextBox = this;
+
+        _fillTextBox.x = params.x;
+        _fillTextBox.y = params.y;
+        _fillTextBox.font = params.font;
+        _fillTextBox.color = params.color;
+        _fillTextBox.align = params.align;
+        _fillTextBox.text = params.text;
+        _fillTextBox.baseLine = params.baseLine;
+        _fillTextBox.maxWidth = params.maxWidth;
+    }
+
+    _engine.fillTextBox.prototype = {
+        draw: function(){
+            let parent = document.createElement("span");
+            parent.appendChild(document.createTextNode("height"));
+            document.body.appendChild(parent);
+            parent.style.cssText = "font: " + this.font + "; white-space: nowrap; display: inline;";
+            this.lineHeight = parent.offsetHeight;
+            document.body.removeChild(parent);
+            
+            let y = this.y;
+
+            let words = this.text.split(" ");
+            let countWords = words.length;
+            let line = "";
+            for (let n = 0; n < countWords; n++) {
+                let testLine = line + words[n] + " ";
+                let testWidth = _engine.ctx.measureText(testLine).width;
+                if (testWidth > this.maxWidth && this.maxWidth != undefined) {
+                    
+                    _engine.ctx.font = this.font;
+                    _engine.ctx.fillStyle = this.color;
+                    _engine.ctx.textAlign = this.align;
+                    _engine.ctx.textBaseline = this.baseLine;
+                    
+                    _engine.ctx.fillText(line, this.x, y);
+                    line = words[n] + " ";
+                    y += this.lineHeight;
+                }
+                else {
+                    line = testLine;
+                }
+            }
+            _engine.ctx.font = this.font;
+            _engine.ctx.fillStyle = this.color;
+            _engine.ctx.textAlign = this.align;
+            _engine.ctx.textBaseline = this.baseLine;
+            _engine.ctx.fillText(line, this.x, y);
+        }
+    }
+
     //#Math things
     /**
      * @param int x1 -> x coordinate of first point

@@ -42,7 +42,20 @@ for(let i = 0; i < planets.length; i++) {
     });
 }
 
+var t = new scene.fillTextBox({
+    x: 50*vw,
+    y: 10*vh,
+    color: 'white',
+    align: 'center',
+    maxWidth: 20*vw,
+    text: 'It is my long long long long long long long long long long long long text',
+    font: 1.8*vh + 'px Arial'
+});
+
 scene.update = function(){
+
+    t.draw();
+
     for(var a in scene.pressedKeys){
         if(scene.pressedKeys[a] && a == 87) {
             camera.y++;
