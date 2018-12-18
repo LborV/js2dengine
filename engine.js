@@ -819,17 +819,24 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _fillTextBox.text = params.text;
         _fillTextBox.baseLine = params.baseLine;
         _fillTextBox.maxWidth = params.maxWidth;
-    }
+        _fillTextBox.lineHeight = undefined;
 
-    _engine.fillTextBox.prototype = {
-        draw: function(){
+        _fillTextBox.getLineHeight = function(){
             let parent = document.createElement("span");
             parent.appendChild(document.createTextNode("height"));
             document.body.appendChild(parent);
             parent.style.cssText = "font: " + this.font + "; white-space: nowrap; display: inline;";
             this.lineHeight = parent.offsetHeight;
             document.body.removeChild(parent);
-            
+        }
+    }
+
+    _engine.fillTextBox.prototype = {
+        draw: function(){
+            if(this.lineHeight == undefined) {
+                this.getLineHeight();
+            }
+
             let y = this.y;
 
             let words = this.text.split(" ");
