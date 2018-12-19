@@ -1,0 +1,170 @@
+<html>
+<head>
+    <title>TEST</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <img src="rocket.png" alt="" id="button" style="display: none;">
+    <script src="../../engine.js"></script>
+    <script>
+        var chat = new engine('background: url(tesla_16x9.jpg); background-size: cover;');
+
+        const vw = chat.width / 100;
+        const vh = chat.height / 100;
+
+        var socket = new chat.socket({
+            url: "ws://localhost:8000"
+        });
+
+        if(socket == false) {
+            _engine.engineLogger.badMessage("Can't create socket!");
+        }
+
+        var text = []; 
+
+        text.push(new chat.fillTextBox({
+            x: 10*vw,
+            y: 70 *vh,
+            color: 'red',
+            font: 2*vh + 'px Arial',
+            text: 'Welcome!',
+            align: 'left',
+            maxWidth: 80*vw
+        }));
+
+        socket.onmessage = function(event){
+            if(event.data != '') {
+
+                for(let i = 0; i < text.length; i++){
+                    text[i].y -= 5 * vh;
+                }
+
+                let today = new Date();
+                time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                
+                text.push(new chat.fillTextBox({
+                    x: 10*vw,
+                    y: text[text.length - 1].y + 5 *vh,
+                    color: 'yellow',
+                    font: 2*vh + 'px Arial',
+                    text: time + ': ',
+                    align: 'left',
+                    maxWidth: 80*vw
+                }));
+
+                text.push(new chat.fillTextBox({
+                    x: 10*vw + chat.measureText({text: time + ': ', font: 2*vh + 'px Arial'}),
+                    y: text[text.length - 1].y,
+                    color: 'green',
+                    font: 2*vh + 'px Arial',
+                    text: event.data,
+                    align: 'left',
+                    maxWidth: 80*vw
+                }));
+            }
+        }
+
+        var button = new chat.fillBox({
+            x: 60*vw,
+            y: 80*vh,
+            width: 30*vw,
+            height: 10*vw,
+            color: '#AAA5',
+            button: true
+        });
+
+        var string = '';
+
+        button.onDown = function(){
+            socket.send(string);
+            string = '';
+        }
+
+        button.hover = function(){
+            this.color = '#EEE5';
+        }
+        button.unhover = function(){
+            this.color = '#AAA5';
+        }
+
+        var buttonText = new chat.sprite({
+            x: 67*vw,
+            y: 80*vh,
+            image: document.getElementById('button'),
+            width: 15*vw,
+            height: 10*vw
+        });
+
+        var typeMsg = new chat.fillTextBox({
+            x: 5*vw,
+            y: 82*vh,
+            color: '#0A0',
+            font: 2*vw + 'px Arial',
+            maxWidth: 45*vw,
+            text: '',
+            align: 'left'
+        });
+
+        var back = new chat.fillBox({
+            x: 0,
+            y: 75*vh,
+            width: 100*vw,
+            height: 25*vh,
+            color: '#3d3d3d55'
+        });
+
+        var ticks = 0;
+
+        chat.update = function(){
+            //Normal text input can be like this
+            for(var a in chat.pressedKeysLetter){
+                if(chat.pressedKeysLetter[a]) {
+                    if(a.length > 1 && a != 'Enter' && a != 'Backspace') {
+                        chat.pressedKeysLetter[a] = false;                        
+                        continue;
+                    } else if(a == 'Enter') {
+                        chat.pressedKeysLetter[a] = false;                        
+                        socket.send(string);
+                        string = '';
+                        continue;
+                    } else if(a == 'Backspace'){
+                        chat.pressedKeysLetter[a] = false;
+                        string = string.substring(0, string.length-1);
+                        continue;
+                    }
+
+                    string += a;
+                    //Listen once
+                    chat.pressedKeysLetter[a] = false;
+                }
+            }
+
+            back.draw();
+
+            typeMsg.text = string;
+            typeMsg.draw();
+            button.draw();
+            buttonText.draw();
+
+            for(let i = 0; i < text.length; i++){
+                text[i].draw();
+            }
+
+            if(ticks == 100) {
+                socket.send();
+                ticks = 0;
+            } else {
+                ticks++;
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -852,15 +852,16 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
             let words = this.text.split(" ");
             let countWords = words.length;
             let line = "";
+
+            _engine.ctx.font = this.font;
+            _engine.ctx.fillStyle = this.color;
+            _engine.ctx.textAlign = this.align;
+            _engine.ctx.textBaseline = this.baseLine;
+
             for (let n = 0; n < countWords; n++) {
                 let testLine = line + words[n] + " ";
                 let testWidth = _engine.ctx.measureText(testLine).width;
                 if (testWidth > this.maxWidth && this.maxWidth != undefined) {
-                    
-                    _engine.ctx.font = this.font;
-                    _engine.ctx.fillStyle = this.color;
-                    _engine.ctx.textAlign = this.align;
-                    _engine.ctx.textBaseline = this.baseLine;
                     
                     _engine.ctx.fillText(line, this.x, y);
                     line = words[n] + " ";
@@ -870,10 +871,6 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
                     line = testLine;
                 }
             }
-            _engine.ctx.font = this.font;
-            _engine.ctx.fillStyle = this.color;
-            _engine.ctx.textAlign = this.align;
-            _engine.ctx.textBaseline = this.baseLine;
             _engine.ctx.fillText(line, this.x, y);
         }
     }
@@ -965,7 +962,9 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _cookie.get = function(name){
             var value = "; " + document.cookie;
             var parts = value.split("; " + name + "=");
-            if (parts.length == 2) return parts.pop().split(";").shift();
+            if (parts.length == 2) {
+                return parts.pop().split(";").shift();   
+            }
         }
 
         _cookie.delete = function(name) {
@@ -979,6 +978,79 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
     }
 
     _engine.engineCookie = new _engine.cookie();
+
+    /**
+     * #Socket
+     * @params array params:
+     * url -> url
+     * protocols -> arrat of protokols
+     */
+    _engine.socket = function(params){
+        _socket = this;
+
+        if(params.url == undefined) {
+            return;
+        }
+
+        _socket.url = params.url;
+
+        if(params.protocols != undefined) {
+            _socket.protocols = params.protocols;
+        } else {
+            _socket.protocols = [];
+        }
+
+        _socket.onopen = function(){
+            _engine.engineLogger.errorMessage('Socket on open function is not declared');
+        }
+
+        _socket.onclose = function(){
+            _engine.engineLogger.errorMessage('Socket on close function is not declared');
+        }
+
+        _socket.onmessage = function(){
+            _engine.engineLogger.errorMessage('Socket on message function is not declared');
+        }
+
+        _socket.socket = new WebSocket(_socket.url, _socket.protocols);
+        
+        _socket.socket.onopen = function(event){
+            _socket.onopen(event);
+        }
+        
+        _socket.socket.onclose = function(event){
+            _socket.onclose(event);
+        }
+
+        _socket.socket.onmessage = function(event){
+            _socket.onmessage(event);
+        }
+
+        _socket.socket.onerror = function(error){
+            _engine.engineLogger.errorMessage('Error: ' + error);
+        }
+
+        _socket.send = function(msg){
+            if(msg != undefined && msg != null) {
+                _socket.socket.send(msg);
+            } else {
+                _socket.socket.send('');
+            }
+        }
+    }
+
+    /**
+     * Measure text width
+     * @params array params:
+     * text -> string
+     * font -> string of font style
+     * 
+     * @return int length of line
+     */
+    _engine.measureText = function(params){
+        _engine.ctx.font = params.font;
+        return _engine.ctx.measureText(params.text).width;
+    }
 
     //#Start engine automatically
     if(_engine.startAuto) {
