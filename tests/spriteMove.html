@@ -1,0 +1,50 @@
+<html>
+<head>
+    <title>TEST</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <img src="media.png" alt="" id="sprite" style="display: none;">
+    <script src="../engine.js"></script>
+    <script>
+        var scene = new engine('background: black;');
+        const vw = scene.width / 100;
+        const vh = scene.height / 100;
+
+        var sprite = new scene.sprite({
+            x: 50*vw,
+            y: 50*vh,
+            width: 5*vw,
+            height: 5*vw,
+            image: document.getElementById('sprite')
+        });
+
+        scene.update = function(){
+            for(var a in scene.pressedKeys){
+                if(scene.pressedKeys[a] && a == 87) {
+                    sprite.y -= 10;
+                }
+                if(scene.pressedKeys[a] && a == 83) {
+                    sprite.y += 10;
+                }
+                if(scene.pressedKeys[a] && a == 65) {
+                    sprite.x -= 10;
+                }
+                if(scene.pressedKeys[a] && a == 68) {
+                    sprite.x += 10;
+                }
+                scene.pressedKeys[a] = false;
+            }
+
+            sprite.draw();
+        }
+    </script>
+</body>
+</html>
