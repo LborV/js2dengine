@@ -983,7 +983,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      * #Socket
      * @params array params:
      * url -> url
-     * protocols -> arrat of protokols
+     * protocols -> array of protokols
      */
     _engine.socket = function(params){
         _socket = this;
