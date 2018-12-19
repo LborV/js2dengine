@@ -612,7 +612,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
 
     _engine.sprite.prototype = {
         draw: function(){
-            if(!(this.x + this.width >= 0 && this.x <= _engine.width && this.y + this.height <= _engine.height && this.y >= 0)) {
+            if(this.x + this.width < 0 && this.x >_engine.width && this.y + this.height > _engine.height && this.y < 0) {
                 return;
             }
 
