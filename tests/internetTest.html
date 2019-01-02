@@ -24,8 +24,10 @@
             font: '30px Arial'
         });
 
+        var internet = new scene.internet();
+
         scene.update = function(){
-            text.text = scene.checkConnection();
+            text.text = internet.checkConnection();
             text.draw();
         }
     </script>

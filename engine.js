@@ -1033,14 +1033,16 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
     //#Network
     /**
      * Internet
-     * 
-     * @return bool true if online, else false
      */
-    _engine.checkConnection = function(){
-        return navigator.onLine;
+    _engine.internet = function(){
+        /**
+         * @return bool true if online, else false
+         */
+        this.checkConnection = function(){
+            return navigator.onLine;
+        }
     }
-
-
+    
     /**
      * #Socket
      * @params array params:
