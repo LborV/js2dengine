@@ -979,6 +979,57 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
 
     _engine.engineCookie = new _engine.cookie();
 
+    //#LocalStorage
+    /**
+     * Class that work with local storage
+     */
+    _engine.localStorage = function(){
+        let _localStorage = this;
+
+        _localStorage.save = function(name, value){
+            try {
+                localStorage.setItem(name, value);
+                return true;
+            } catch(e) {
+                return false;
+            }
+        }
+
+        _localStorage.get = function(name){
+            return localStorage.getItem(name);
+        }
+
+        _localStorage.delete = function(name){
+            localStorage.removeItem(name);
+        }
+
+        _localStorage.clear = function(){
+            localStorage.clear();
+        }
+
+        _localStorage.objectsCount = function(){
+            return localStorage.length;
+        }
+
+        _localStorage.used = function(){
+            let data = '';
+
+            for(let key in window.localStorage) {
+                if(window.localStorage.hasOwnProperty(key)){
+                    data += window.localStorage[key] + key;
+                }
+            }
+
+            return data.length;
+        }
+
+        _localStorage.freeSpace = function(){
+            
+        }
+    }
+
+    _engine.engineLocalStorage = new _engine.localStorage();
+
     /**
      * #Socket
      * @params array params:
