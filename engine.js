@@ -1030,6 +1030,17 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
 
     _engine.engineLocalStorage = new _engine.localStorage();
 
+    //#Network
+    /**
+     * Internet
+     * 
+     * @return bool true if online, else false
+     */
+    _engine.checkConnection = function(){
+        return navigator.onLine;
+    }
+
+
     /**
      * #Socket
      * @params array params:

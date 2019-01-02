@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>TEST</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <script src="../engine.js"></script>
+    <script>
+        var scene = new engine();
+
+        var text = new scene.fillTextLine({
+            x: scene.width/2,
+            y: scene.height/2,
+            color: 'white',
+            align: 'center',
+            text: '',
+            font: '30px Arial'
+        });
+
+        scene.update = function(){
+            text.text = scene.checkConnection();
+            text.draw();
+        }
+    </script>
+</body>
+</html>
