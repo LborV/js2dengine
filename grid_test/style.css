@@ -23,9 +23,10 @@ a:hover{
     display: grid;
     grid-template-areas: 'header header header header header' 'content content content content menu' 'footer footer footer footer footer';
     grid-template-rows: 10% auto 10%;
-    width: 100vw;
+    width: 90vw;
     height: 100vh;
     grid-gap: 1vw;
+    margin:auto;
 }
 
 .item{
@@ -35,7 +36,7 @@ a:hover{
 
 .header{
     grid-area: header;
-    background: #13abe6;
+    background: #084b66;
 }
 
 .footer{
@@ -78,7 +79,7 @@ a:hover{
     width: 60%;
     float: left;
     text-align: center;
-    color: #393;
+    color: #FFF;
     font-size: 4em;
 }
 
