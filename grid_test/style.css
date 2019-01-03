@@ -49,6 +49,7 @@ a:hover{
     grid-area: content;
     text-align: justify;
     padding: 1%;
+    padding-right: 3%;
 }
 
 .menu{
@@ -80,21 +81,14 @@ a:hover{
     float: left;
     text-align: center;
     color: #FFF;
-    font-size: 4em;
+    font-size: 5vh;
 }
 
 .lang{
-    position: fixed;
-    bottom: 2vw;
-    right: 2vw;
-    border-radius: 50%;
-    color: #FFF;
-    padding: 1vw;
-    border: 1px solid  #FFF;
+    text-align: center;
+    cursor: pointer;
 }
 
 .lang:hover{
-    background: #FFF;
-    color: #000;
-    border-color: #000;
+    color: #FFF;
 }
