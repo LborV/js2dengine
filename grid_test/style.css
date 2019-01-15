@@ -19,10 +19,25 @@ a:hover{
     cursor: pointer;
 }
 
+input[type="submit"]{
+    text-decoration: none;
+    background: none;
+    border: none;
+    color: #AAA;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+input[type="submit"]:hover{
+    color: #FFF;
+    cursor: pointer;
+}
+
 .grid_cont{
     display: grid;
     grid-template-areas: 'header header header header header' 'content content content content menu' 'footer footer footer footer footer';
-    grid-template-rows: 10% auto 10%;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10% 80% 10%;
     width: 90vw;
     height: 100vh;
     grid-gap: 1vw;
@@ -47,9 +62,7 @@ a:hover{
 
 .content{
     grid-area: content;
-    text-align: justify;
-    padding: 1%;
-    padding-right: 3%;
+    padding-left: 2%;
 }
 
 .menu{
