@@ -17,8 +17,6 @@
         } else {
             readfile("main.html");
         }
-
-        
     ?>
 
         <div class="item menu">
