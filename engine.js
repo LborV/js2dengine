@@ -1104,6 +1104,22 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
     }
 
     /**
+     * Delay
+     * @param int ms -> miliseconds to delay
+     */
+    _engine.delay = function(ms) {
+        let cur_d = new Date();
+        let cur_ticks = cur_d.getTime();
+        let ms_passed = 0;
+        while(ms_passed < ms) {
+            let d = new Date();
+            let ticks = d.getTime();
+            ms_passed = ticks - cur_ticks;
+        }
+    }
+    
+
+    /**
      * Measure text width
      * @params array params:
      * text -> string
