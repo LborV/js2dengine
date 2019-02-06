@@ -7,6 +7,10 @@ const vh = scene.height / 100;
 var snake = new Snake(scene, 2*vw);
 snake.spawn();
 
+var delayTime = 100;
+
+var oldScore = 0;
+
 scene.update = function () {
 
     for (var a in scene.pressedKeys) {
@@ -32,5 +36,16 @@ scene.update = function () {
     
 
     snake.update();
-    scene.delay(120);
+
+    if (snake.isDead()) {
+        snake.spawn();
+        delayTime = 100;
+    }
+
+    if (oldScore != snake.size) {
+        oldScore = snake.size;
+        delayTime -= 10;
+    }
+
+    scene.delay(delayTime);
 }

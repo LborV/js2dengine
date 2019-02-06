@@ -36,6 +36,14 @@ function Snake(scene, scl) {
      * @params int x,y -> is snake moving right or left or up or down
      */
     _snake.control = function (x, y) {
+        if (x == _snake.speedX && y == -_snake.speedY) {
+            return;
+        }
+
+        if (x == -_snake.speedX && y == _snake.speedY) {
+            return;
+        }
+
         _snake.speedX = x;
         _snake.speedY = y;
     }
@@ -44,18 +52,17 @@ function Snake(scene, scl) {
      * Update funtion
      */
     _snake.update = function () {
+        _snake.eat();
 
-        if(_snake.size > 1) {
-            for (let i = 1; i < _snake.size; i++) {
-                _snake.body[i].x = _snake.body[i - 1].x;
-                _snake.body[i].y = _snake.body[i - 1].y;
-            }
+
+        for (let i = _snake.size - 1; i > 0; i--) {
+            _snake.body[i].x = _snake.body[i - 1].x;
+            _snake.body[i].y = _snake.body[i - 1].y;
         }
 
         _snake.body[0].x += _snake.speedX * _snake.scl;
         _snake.body[0].y += _snake.speedY * _snake.scl;
 
-        _snake.eat();
         _snake.draw();
     }
 
@@ -64,13 +71,13 @@ function Snake(scene, scl) {
      * Draw function
      */
     _snake.draw = function () {
-        _snake.body.forEach(block => {
+        _snake.body.forEach(function (block, index) {
             new _snake.scene.fillBox({
                 x: block.x,
                 y: block.y,
                 width: _snake.scl,
                 height: _snake.scl,
-                color: "#FFF"
+                color: index == 0 ? "#F00" : "#FFF"
             }).draw();
         });
 
@@ -117,10 +124,33 @@ function Snake(scene, scl) {
      * Eat
      */
     _snake.eat = function () {
-        if (_snake.scene.distanceBetweenTwoPoints(_snake.body[0], _snake.food) < _snake.scl) {
+        if (_snake.scene.distanceBetweenTwoPoints(_snake.body[0], _snake.food) < _snake.scl/2) {
             _snake.body.push({ x: _snake.body[0].x, y: _snake.body[0].y });
             _snake.size++;
             _snake.spawnFood();
         }
+    }
+
+    /**
+     * Is dead?
+     * @return true if dead false if alive
+     */
+
+    _snake.isDead = function () {
+        if (_snake.body[0].x > _snake.scene.width || _snake.body[0].x < 0) {
+            return true;
+        }
+
+        if (_snake.body[0].y > _snake.scene.height || _snake.body[0].y < 0) {
+            return true;
+        }
+
+        for (let i = 1; i < _snake.size; i++) {
+            if (_snake.body[0].x == _snake.body[i].x && _snake.body[0].y == _snake.body[i].y) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
