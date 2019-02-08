@@ -38,7 +38,8 @@ scene.update = function () {
         let imageData = scene.ctx.getImageData(5 * vw, 5 * vh, 90 * vw, 90 * vh);
         
         if (click) {
-           
+            for (let i = 0; i < 100; i++)
+                imageData.data[Math.floor(Math.random() * imageData.data.length)] = Math.floor(Math.random() * 255);
 
             myImage = imageData;
         }
