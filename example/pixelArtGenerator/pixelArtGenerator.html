@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>TEST</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        div{
+            width: 100%;
+            text-align: center;
+            margin-top: 1vh;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <div id="cnv"></div>
+    <script src="../../engine.js"></script>
+    <script src="main.js"></script>
+    <div>
+        <input type="file" id="file" onchange="process(this)" accept="image/*">
+    </div>
+</body>
+</html>

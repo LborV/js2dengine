@@ -4,8 +4,9 @@
  * @param bool startAuto -> start engine(drawing) automatically 
  * @param int width -> canvas width 
  * @param int height -> canvas height
+ * @param string id -> where to uppeng canvas, default body
  */
-function engine(style = undefined, startAuto = undefined, width = undefined, height = undefined) {
+function engine(style = undefined, startAuto = undefined, width = undefined, height = undefined, id = undefined) {
     //#Initialization
     
     /**
@@ -49,7 +50,11 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
     /**
      * Insert canvas into HTML
      */
-    _engine.doc.body.appendChild(_engine.canv);
+    if (id == undefined) {
+        _engine.doc.body.appendChild(_engine.canv);        
+    } else {
+        _engine.doc.getElementById(id).appendChild(_engine.canv);
+    }
 
     /**
      * Context of canvas
