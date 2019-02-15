@@ -1,16 +1,22 @@
 /**
  * Include file in head of document
  * 
- * @param string file -> path to file 
+ * @param array of files
  */
 function include(file) {
     if (document.getElementById(file)) {
         return;    
     }
 
+    if (Array.isArray(file)) {
+        file.forEach(f => include(f));
+        return true;
+    }
+
     var el = document.createElement('script');
     el.setAttribute("src", file);
     el.setAttribute("id", file);
+    el.setAttribute("async", false);
     document.head.appendChild(el);
 }
 
@@ -32,4 +38,4 @@ function replaceDOMVariables(ch, str) {
  */
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
-  }
+}

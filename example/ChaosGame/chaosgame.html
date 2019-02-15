@@ -13,9 +13,11 @@
 <body>
     <script src="../../features.js"></script>
     <script>
-        include("../../engine.js");
-        include("particles.js");
-        include("main.js");
+        var start = include([
+            "../../engine.js",
+            "particles.js",
+            "main.js"
+            ]);
     </script>
 </body>
 </html>
