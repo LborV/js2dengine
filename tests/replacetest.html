@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>TEST</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=0' />
+</head>
+<body>
+    <script src="../features.js"></script>
+    $a:<textarea cols="30" rows="10" onchange="change(this.value, '$a')"></textarea>
+    $b:<textarea cols="30" rows="10" onchange="change(this.value, '$b')"></textarea>
+    <button onclick=reset()>RESET</button>
+    <script>
+        var r;
+        function change(value, varname){
+            let str = replaceDOMVariables(varname, value);
+            
+            if(r == undefined) {
+                r = str
+            }
+        }
+
+        function reset(){
+            document.body.innerHTML = r;
+        }
+    </script>
+    <br><br><br>
+    <p>$a</p>
+    <h1>$a</h1>
+    <div>$a</div>
+    <span>$b</span>
+    <a href="">$b</a>
+
+</body>
+</html>

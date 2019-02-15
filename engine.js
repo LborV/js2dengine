@@ -33,6 +33,11 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         _engine.height = _engine.doc.body.clientHeight;
     }
 
+    //view width and view height
+    _engine.vw = _engine.width / 100;
+    _engine.vh = _engine.height / 100;
+
+
     /**
      * Creating canvas object 
      */
@@ -117,7 +122,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Disable console logs
          */
         this.disable = function(){
-            this.oldConsoleLog = _engine.engineLogger.errorMessage;
+            this.oldConsoleLog = _engine.log.errorMessage;
             window['console']['log'] = function() {};
         }
 
@@ -130,8 +135,8 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
     /**
      * New object to display messages inside a engine to debuging
      */
-    _engine.engineLogger = new _engine.logger();
-    _engine.engineLogger.enable();
+    _engine.log = new _engine.logger();
+    _engine.log.enable();
 
     //#Loading
     _engine.isLoaded = false;
@@ -141,7 +146,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      * Should be redefined
      */
     _engine.loading = function(){
-        _engine.engineLogger.errorMessage('Loading function is not defined');
+        _engine.log.errorMessage('Loading function is not defined');
     }
 
     /**
@@ -149,7 +154,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      * Should be redefined
      */
     _engine.onload = function(){
-        _engine.engineLogger.errorMessage('On load function is not defined');
+        _engine.log.errorMessage('On load function is not defined');
     }
 
     /**
@@ -166,7 +171,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
      * Should be redefined
      */
     _engine.update = function(){
-        _engine.engineLogger.errorMessage('Update function is not declared!');
+        _engine.log.errorMessage('Update function is not declared!');
     }
 
     /**
@@ -227,7 +232,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _fillBox.hover = function(){
-            _engine.engineLogger.errorMessage('Hover function is not declared');
+            _engine.log.errorMessage('Hover function is not declared');
         }
 
         /**
@@ -235,7 +240,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _fillBox.unhover = function(){
-            _engine.engineLogger.errorMessage('Unhover function is not declared');
+            _engine.log.errorMessage('Unhover function is not declared');
         }
 
         /**
@@ -243,7 +248,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _fillBox.onDown = function(){
-            _engine.engineLogger.errorMessage('On mouse down function is not declared');
+            _engine.log.errorMessage('On mouse down function is not declared');
         }
 
         /**
@@ -251,7 +256,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _fillBox.onUp = function(){
-            _engine.engineLogger.errorMessage('On mouse up function is not declared');
+            _engine.log.errorMessage('On mouse up function is not declared');
         }
     }
 
@@ -328,7 +333,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _strokeBox.hover = function(){
-            _engine.engineLogger.errorMessage('Hover function is not declared');
+            _engine.log.errorMessage('Hover function is not declared');
         }
 
         /**
@@ -336,7 +341,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _strokeBox.unhover = function(){
-            _engine.engineLogger.errorMessage('Unhover function is not declared');
+            _engine.log.errorMessage('Unhover function is not declared');
         }
 
         /**
@@ -344,7 +349,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _strokeBox.onDown = function(){
-            _engine.engineLogger.errorMessage('On mouse down function is not declared');
+            _engine.log.errorMessage('On mouse down function is not declared');
         }
 
         /**
@@ -352,7 +357,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _strokeBox.onUp = function(){
-            _engine.engineLogger.errorMessage('On mouse up function is not declared');
+            _engine.log.errorMessage('On mouse up function is not declared');
         }
     }
 
@@ -437,7 +442,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _circle.hover = function(){
-            _engine.engineLogger.errorMessage('Hover function is not declared');
+            _engine.log.errorMessage('Hover function is not declared');
         }
 
         /**
@@ -445,7 +450,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _circle.unhover = function(){
-            _engine.engineLogger.errorMessage('Unhover function is not declared');
+            _engine.log.errorMessage('Unhover function is not declared');
         }
 
         /**
@@ -453,7 +458,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _circle.onDown = function(){
-            _engine.engineLogger.errorMessage('On mouse down function is not declared');
+            _engine.log.errorMessage('On mouse down function is not declared');
         }
 
         /**
@@ -461,7 +466,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _circle.onUp = function(){
-            _engine.engineLogger.errorMessage('On mouse up function is not declared');
+            _engine.log.errorMessage('On mouse up function is not declared');
         }
     }
 
@@ -574,7 +579,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _sprite.hover = function(){
-            _engine.engineLogger.errorMessage('Hover function is not declared');
+            _engine.log.errorMessage('Hover function is not declared');
         }
 
         /**
@@ -582,7 +587,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _sprite.unhover = function(){
-            _engine.engineLogger.errorMessage('Unhover function is not declared');
+            _engine.log.errorMessage('Unhover function is not declared');
         }
 
         /**
@@ -590,7 +595,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _sprite.onDown = function(){
-            _engine.engineLogger.errorMessage('On mouse down function is not declared');
+            _engine.log.errorMessage('On mouse down function is not declared');
         }
 
         /**
@@ -598,7 +603,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
          * Should be redefined
          */
         _sprite.onUp = function(){
-            _engine.engineLogger.errorMessage('On mouse up function is not declared');
+            _engine.log.errorMessage('On mouse up function is not declared');
         }
 
         /**
@@ -1070,15 +1075,15 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         }
 
         _socket.onopen = function(){
-            _engine.engineLogger.errorMessage('Socket on open function is not declared');
+            _engine.log.errorMessage('Socket on open function is not declared');
         }
 
         _socket.onclose = function(){
-            _engine.engineLogger.errorMessage('Socket on close function is not declared');
+            _engine.log.errorMessage('Socket on close function is not declared');
         }
 
         _socket.onmessage = function(){
-            _engine.engineLogger.errorMessage('Socket on message function is not declared');
+            _engine.log.errorMessage('Socket on message function is not declared');
         }
 
         _socket.socket = new WebSocket(_socket.url, _socket.protocols);
@@ -1096,7 +1101,7 @@ function engine(style = undefined, startAuto = undefined, width = undefined, hei
         }
 
         _socket.socket.onerror = function(error){
-            _engine.engineLogger.errorMessage('Error: ' + error);
+            _engine.log.errorMessage('Error: ' + error);
         }
 
         _socket.send = function(msg){

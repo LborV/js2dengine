@@ -20,7 +20,7 @@
             );
 
         //Console logs better disable
-        //game.engineLogger.disable();
+        game.log.disable();
         
         //Player
         var bird = new game.sprite({
@@ -114,8 +114,6 @@
         //Alternative: can make this both like a custom field in invisivle object
         var difficult = 1;
         var gameTicks = 0;
-
-        game.engineLogger.infoMessage(restart.y);
 
         //Main game loop
         game.update = function(){
