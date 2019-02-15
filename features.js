@@ -16,7 +16,7 @@ function include(file) {
     var el = document.createElement('script');
     el.setAttribute("src", file);
     el.setAttribute("id", file);
-    el.setAttribute("async", false);
+    //el.setAttribute("async", false);
     document.head.appendChild(el);
 }
 
