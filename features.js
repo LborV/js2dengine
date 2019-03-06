@@ -36,6 +36,6 @@ function replaceDOMVariables(ch, str) {
  * @param int max -> maximal value
  * 
  */
-function getRndInteger(min, max) {
+function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
 }
