@@ -1,32 +1,34 @@
-var scene;
-var vw, vh;
-var particles;
 var currentX, currentY;
 const speed = 25;
 
-scene = new engine("background: black;");
+var scene = new engine("background: black;");
 
-vw = scene.vw;
-vh = scene.vh;
+scene.loading = function () {
+    include([
+        "particles.js",
+        ]);
+}
 
-particles = [];
+scene.onload = function () {
+   scene.particles = [];
 
-particles.push(new particle(50 * vw, 1 * vh, scene));
-particles.push(new particle(1 * vw, 99 * vh, scene));
-particles.push(new particle(99 * vw, 99 * vh, scene));
+    scene.particles.push(new particle(50 * scene.vw, 1 * scene.vh, scene));
+    scene.particles.push(new particle(1 * scene.vw, 99 * scene.vh, scene));
+    scene.particles.push(new particle(99 * scene.vw, 99 * scene.vh, scene));
 
-currentX = getRndInteger(0, scene.width);
-currentY = getRndInteger(0, scene.height);
+    currentX = getRndInteger(0, scene.width);
+    currentY = getRndInteger(0, scene.height);
+}
 
 scene.update = function () {
     for (let i = 0; i < speed; i++) {
-        let randC = particles[getRndInteger(0, 3)];
+        let randC = scene.particles[getRndInteger(0, 3)];
         currentX = (currentX + randC.obj.x) / 2;
         currentY = (currentY + randC.obj.y) / 2;
-        particles.push(new particle(currentX, currentY, scene));
+        scene.particles.push(new particle(currentX, currentY, scene));
     }
 
-    particles.forEach(p => {
+    scene.particles.forEach(p => {
         p.draw();
     });
 }
