@@ -195,4 +195,28 @@ function Matrix(rows, cols) {
 
         return _matrix.data[row-1][column-1];
     }
+
+    _matrix.set = function (array) {
+        if (!Array.isArray(array)) {
+            return false;
+        }
+
+        if (!Array.isArray(array[0])) {
+            return false;
+        }
+
+        _matrix.rows = array.length;
+        _matrix.cols = array[0].length;
+
+        _matrix.data = new Array();
+        for (let r = 0; r < _matrix.rows; r++) {
+            _matrix.data.push(new Array());
+            for (let c = 0; c < _matrix.cols; c++) {
+                _matrix.data[r].push(array[r][c]);
+            }
+        }
+
+        return true;
+    }
+    
 }

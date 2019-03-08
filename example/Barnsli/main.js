@@ -1,16 +1,15 @@
 var currentX, currentY;
-const speed = 100;
+const speed = 3;
 
 var scene = new engine("background: black;");
 
 scene.onload = function () {
     scene.particles = [];
     scene.ctx.transform(30, 0, 0, -30, 200, 350);
-    
+
     var coor = new Matrix(2, 1);
     coor.setColumn(1, [scene.vw * 90, scene.vh * 50]);
     scene.particles.push(new particle(coor.get(1, 1), coor.get(2, 1), scene));
-
 }
 
 function f1(m) {
